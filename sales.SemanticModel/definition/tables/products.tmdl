@@ -1,0 +1,78 @@
+table products
+	lineageTag: 013c7cb0-1f9b-4aea-947c-79f9d32101a4
+
+	column product_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 7169e4e6-f739-4f4a-9203-9bfdbe4b8e7c
+		summarizeBy: none
+		sourceColumn: product_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column category_id
+		dataType: int64
+		formatString: 0
+		lineageTag: da6c297a-de1e-459f-a308-79052f91c8b4
+		summarizeBy: none
+		sourceColumn: category_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column product_name
+		dataType: string
+		lineageTag: ec88eb00-fdfe-4307-be57-9b657fe51b48
+		summarizeBy: none
+		sourceColumn: product_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column sku
+		dataType: string
+		lineageTag: 2253e9cb-3bb4-480f-b0ad-400e9725d2ac
+		summarizeBy: none
+		sourceColumn: sku
+
+		annotation SummarizationSetBy = Automatic
+
+	column unit_price
+		dataType: int64
+		formatString: 0
+		lineageTag: c9904a16-be30-4893-9aad-3a3bf7ab084b
+		summarizeBy: sum
+		sourceColumn: unit_price
+
+		annotation SummarizationSetBy = Automatic
+
+	column stock_quantity
+		dataType: int64
+		formatString: 0
+		lineageTag: 49efd666-3cdb-4e8d-9d86-cef8c51e4787
+		summarizeBy: sum
+		sourceColumn: stock_quantity
+
+		annotation SummarizationSetBy = Automatic
+
+	column is_active
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 03e1e2ea-012d-4947-9134-cda75cfe7d56
+		summarizeBy: none
+		sourceColumn: is_active
+
+		annotation SummarizationSetBy = Automatic
+
+	partition products = m
+		mode: import
+		source =
+				let
+				    Kaynak = Csv.Document(File.Contents("C:\Users\AybükeAltuntaş\Downloads\products.csv"),[Delimiter=",", Columns=7, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+				    #"Tanıtılan Üst Bilgiler" = Table.PromoteHeaders(Kaynak, [PromoteAllScalars=true]),
+				    #"Değiştirilen Tür" = Table.TransformColumnTypes(#"Tanıtılan Üst Bilgiler",{{"product_id", Int64.Type}, {"category_id", Int64.Type}, {"product_name", type text}, {"sku", type text}, {"unit_price", Int64.Type}, {"stock_quantity", Int64.Type}, {"is_active", type logical}})
+				in
+				    #"Değiştirilen Tür"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Gezinme
+

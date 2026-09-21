@@ -1,0 +1,68 @@
+table sellers
+	lineageTag: 3ffccf7d-ae1a-4b4c-93a4-890ccfd25e3d
+
+	column seller_id
+		dataType: int64
+		formatString: 0
+		lineageTag: e9cc7bf7-595b-4070-8931-942b38c69cab
+		summarizeBy: none
+		sourceColumn: seller_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column seller_name
+		dataType: string
+		lineageTag: 4f93b5f1-4102-4090-8b24-2307dc5a150d
+		summarizeBy: none
+		sourceColumn: seller_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column email
+		dataType: string
+		lineageTag: b60e7bab-23cd-44ce-8e2d-b1923a8574a9
+		summarizeBy: none
+		sourceColumn: email
+
+		annotation SummarizationSetBy = Automatic
+
+	column phone
+		dataType: int64
+		formatString: 0
+		lineageTag: 44b63f2f-bccf-47fd-9f54-8ad1726c5897
+		summarizeBy: none
+		sourceColumn: phone
+
+		annotation SummarizationSetBy = Automatic
+
+	column city
+		dataType: string
+		lineageTag: eda50085-63e7-41f3-82fe-5918a44b3241
+		summarizeBy: none
+		sourceColumn: city
+
+		annotation SummarizationSetBy = Automatic
+
+	column commission_rate
+		dataType: int64
+		formatString: 0
+		lineageTag: f7e0755b-e612-4e86-892b-a45fdb552298
+		summarizeBy: none
+		sourceColumn: commission_rate
+
+		annotation SummarizationSetBy = Automatic
+
+	partition sellers = m
+		mode: import
+		source =
+				let
+				    Kaynak = Csv.Document(File.Contents("C:\Users\AybükeAltuntaş\Downloads\sellers.csv"),[Delimiter=",", Columns=6, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+				    #"Tanıtılan Üst Bilgiler" = Table.PromoteHeaders(Kaynak, [PromoteAllScalars=true]),
+				    #"Değiştirilen Tür" = Table.TransformColumnTypes(#"Tanıtılan Üst Bilgiler",{{"seller_id", Int64.Type}, {"seller_name", type text}, {"email", type text}, {"phone", Int64.Type}, {"city", type text}, {"commission_rate", Int64.Type}})
+				in
+				    #"Değiştirilen Tür"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Gezinme
+

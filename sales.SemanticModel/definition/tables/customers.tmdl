@@ -1,0 +1,85 @@
+table customers
+	lineageTag: 4d417e87-7578-47fc-ba2f-6c0fe0dcb692
+
+	column customer_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 0f06e8b2-8ea0-49ca-9510-306d748fe38b
+		summarizeBy: none
+		sourceColumn: customer_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column first_name
+		dataType: string
+		lineageTag: 27811981-9aee-4d54-9756-00b111fb09ba
+		summarizeBy: none
+		sourceColumn: first_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column last_name
+		dataType: string
+		lineageTag: 36891a9b-bdc2-4274-a62a-70c29787665e
+		summarizeBy: none
+		sourceColumn: last_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column email
+		dataType: string
+		lineageTag: 43700305-36f2-4d98-8783-d2aa2c6ec046
+		summarizeBy: none
+		sourceColumn: email
+
+		annotation SummarizationSetBy = Automatic
+
+	column phone
+		dataType: int64
+		formatString: 0
+		lineageTag: 45f85f90-91a6-4061-ac6e-e87ea6522ce2
+		summarizeBy: sum
+		sourceColumn: phone
+
+		annotation SummarizationSetBy = Automatic
+
+	column city
+		dataType: string
+		lineageTag: b939ae31-d9bc-44b6-9325-a27bbe1e6e1d
+		summarizeBy: none
+		sourceColumn: city
+
+		annotation SummarizationSetBy = Automatic
+
+	column created_at
+		dataType: dateTime
+		formatString: dd/mm/yyyy
+		lineageTag: 618ea83c-1ee3-4985-913f-608e96512a26
+		summarizeBy: none
+		sourceColumn: created_at
+
+		variation Varyasyon
+			isDefault
+			relationship: 684759bb-3cea-48b9-9021-d32786c05649
+			defaultHierarchy: LocalDateTable_314e6d54-d443-47e2-9c9d-ec3f890d7dd3.'Tarih Hiyerarşisi'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+		annotation PBI_FormatHint = {"isDateTimeCustom":true}
+
+	partition customers = m
+		mode: import
+		source =
+				let
+				    Kaynak = Csv.Document(File.Contents("C:\Users\AybükeAltuntaş\Downloads\customers.csv"),[Delimiter=",", Columns=7, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+				    #"Tanıtılan Üst Bilgiler" = Table.PromoteHeaders(Kaynak, [PromoteAllScalars=true]),
+				    #"Değiştirilen Tür" = Table.TransformColumnTypes(#"Tanıtılan Üst Bilgiler",{{"customer_id", Int64.Type}, {"first_name", type text}, {"last_name", type text}, {"email", type text}, {"phone", Int64.Type}, {"city", type text}, {"created_at", type date}})
+				in
+				    #"Değiştirilen Tür"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Gezinme
+

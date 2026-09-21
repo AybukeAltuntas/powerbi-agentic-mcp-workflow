@@ -1,0 +1,45 @@
+relationship 684759bb-3cea-48b9-9021-d32786c05649
+	joinOnDateBehavior: datePartOnly
+	fromColumn: customers.created_at
+	toColumn: LocalDateTable_314e6d54-d443-47e2-9c9d-ec3f890d7dd3.Date
+
+relationship AutoDetected_5c6b7d96-5366-46e0-a096-8311eae3c93e
+	fromColumn: products.category_id
+	toColumn: categories.category_id
+
+relationship AutoDetected_e5a45cc8-7402-4154-8fb5-80b09874b258
+	fromColumn: orders.customer_id
+	toColumn: customers.customer_id
+
+relationship AutoDetected_91e44cdb-ef99-4e61-91fa-e74657464778
+	fromColumn: orders.seller_id
+	toColumn: sellers.seller_id
+
+relationship AutoDetected_8c1648a3-6ed7-46a5-b4a3-d0235664efd2
+	fromColumn: order_items.product_id
+	toColumn: products.product_id
+
+relationship AutoDetected_9a63595e-c05c-4b8e-b40a-d570df876129
+	fromColumn: order_items.order_id
+	toColumn: orders.order_id
+
+relationship 7bb8784c-1654-4797-aa1f-e1cbf09308cf
+	joinOnDateBehavior: datePartOnly
+	fromColumn: payments.payment_date
+	toColumn: LocalDateTable_7599f44b-398e-4db1-a56d-3f2ca354bd33.Date
+
+relationship AutoDetected_8f340200-9c9d-4b67-89ac-b317d918b0b9
+	crossFilteringBehavior: bothDirections
+	fromCardinality: one
+	fromColumn: payments.order_id
+	toColumn: orders.order_id
+
+relationship 9fac95da-5f02-4b7f-811a-e3f566444d64
+	joinOnDateBehavior: datePartOnly
+	fromColumn: dim_date.Date
+	toColumn: LocalDateTable_10dfaeef-799a-4406-a077-686df2dc84cd.Date
+
+relationship 70f91402-6172-258b-4d90-3e4c58a7bc09
+	fromColumn: orders.order_date
+	toColumn: dim_date.Date
+

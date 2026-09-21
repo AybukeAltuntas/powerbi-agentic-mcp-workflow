@@ -1,0 +1,71 @@
+table order_items
+	lineageTag: 046d02de-600f-4b80-8cfa-d692550a7706
+
+	column order_item_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 26f7ea81-1018-4bc6-8f9f-36f97ae510ed
+		summarizeBy: sum
+		sourceColumn: order_item_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column order_id
+		dataType: int64
+		formatString: 0
+		lineageTag: aa6f9f0b-1d93-44b3-a33d-8cd8f12a5c72
+		summarizeBy: none
+		sourceColumn: order_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column product_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 974897a6-5c1b-409a-8969-48b60ca1d67a
+		summarizeBy: none
+		sourceColumn: product_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column quantity
+		dataType: int64
+		formatString: 0
+		lineageTag: 3e656288-7517-4bd1-8cb2-ee5d2e431eb3
+		summarizeBy: sum
+		sourceColumn: quantity
+
+		annotation SummarizationSetBy = Automatic
+
+	column unit_price
+		dataType: int64
+		formatString: 0
+		lineageTag: da2a2095-7e3d-4986-a559-ac121356830b
+		summarizeBy: sum
+		sourceColumn: unit_price
+
+		annotation SummarizationSetBy = Automatic
+
+	column line_total
+		dataType: int64
+		formatString: 0
+		lineageTag: 6e14bdf2-b671-4262-a73e-67403139b1d9
+		summarizeBy: sum
+		sourceColumn: line_total
+
+		annotation SummarizationSetBy = Automatic
+
+	partition order_items = m
+		mode: import
+		source =
+				let
+				    Kaynak = Csv.Document(File.Contents("C:\Users\AybükeAltuntaş\Downloads\order_items.csv"),[Delimiter=",", Columns=6, Encoding=1254, QuoteStyle=QuoteStyle.None]),
+				    #"Tanıtılan Üst Bilgiler" = Table.PromoteHeaders(Kaynak, [PromoteAllScalars=true]),
+				    #"Değiştirilen Tür" = Table.TransformColumnTypes(#"Tanıtılan Üst Bilgiler",{{"order_item_id", Int64.Type}, {"order_id", Int64.Type}, {"product_id", Int64.Type}, {"quantity", Int64.Type}, {"unit_price", Int64.Type}, {"line_total", Int64.Type}})
+				in
+				    #"Değiştirilen Tür"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Gezinme
+

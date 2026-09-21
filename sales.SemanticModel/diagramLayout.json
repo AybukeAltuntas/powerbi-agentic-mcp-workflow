@@ -1,0 +1,126 @@
+{
+  "version": "1.1.0",
+  "diagrams": [
+    {
+      "ordinal": 0,
+      "scrollPosition": {
+        "x": 200,
+        "y": 2.4000000953674316
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 186,
+            "y": 0
+          },
+          "nodeIndex": "categories",
+          "nodeLineageTag": "c9d42475-4c5c-470e-8cb0-137799d0de40",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 1
+        },
+        {
+          "location": {
+            "x": 233,
+            "y": 325
+          },
+          "nodeIndex": "customers",
+          "nodeLineageTag": "4d417e87-7578-47fc-ba2f-6c0fe0dcb692",
+          "size": {
+            "height": 248,
+            "width": 234
+          },
+          "zIndex": 2
+        },
+        {
+          "location": {
+            "x": 667,
+            "y": 401
+          },
+          "nodeIndex": "sellers",
+          "nodeLineageTag": "3ffccf7d-ae1a-4b4c-93a4-890ccfd25e3d",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 3
+        },
+        {
+          "location": {
+            "x": 520,
+            "y": 0
+          },
+          "nodeIndex": "products",
+          "nodeLineageTag": "013c7cb0-1f9b-4aea-947c-79f9d32101a4",
+          "size": {
+            "height": 248,
+            "width": 234
+          },
+          "zIndex": 4
+        },
+        {
+          "location": {
+            "x": 878,
+            "y": 161
+          },
+          "nodeIndex": "orders",
+          "nodeLineageTag": "5850c3b7-65d1-4dbb-a75e-11cc7b92a5a2",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 5
+        },
+        {
+          "location": {
+            "x": 1212,
+            "y": 0
+          },
+          "nodeIndex": "order_items",
+          "nodeLineageTag": "046d02de-600f-4b80-8cfa-d692550a7706",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 6
+        },
+        {
+          "location": {
+            "x": 1227,
+            "y": 318
+          },
+          "nodeIndex": "payments",
+          "nodeLineageTag": "a853ff93-a183-4701-a352-6f62b5c4930e",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 7
+        },
+        {
+          "location": {
+            "x": 952.20000457763672,
+            "y": 428
+          },
+          "nodeIndex": "dim_date",
+          "nodeLineageTag": "f8aebd88-70c7-4cc1-bdc1-f2c57af13241",
+          "size": {
+            "height": 272,
+            "width": 234
+          },
+          "zIndex": 8
+        }
+      ],
+      "name": "Tüm tablolar",
+      "zoomValue": 100,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    }
+  ],
+  "selectedDiagram": "Tüm tablolar",
+  "defaultDiagram": "Tüm tablolar"
+}

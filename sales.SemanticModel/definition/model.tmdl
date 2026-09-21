@@ -1,0 +1,31 @@
+model Model
+	culture: tr-TR
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: tr-TR
+	valueFilterBehavior: independent
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+annotation PBI_QueryOrder = ["categories","customers","sellers","products","orders","order_items","payments","dim_date"]
+
+annotation PBI_ProTooling = ["DevMode"]
+
+ref table categories
+ref table customers
+ref table DateTableTemplate_d5a99096-dbf5-4c96-831d-cab23c7105a7
+ref table LocalDateTable_314e6d54-d443-47e2-9c9d-ec3f890d7dd3
+ref table sellers
+ref table products
+ref table orders
+ref table order_items
+ref table payments
+ref table LocalDateTable_7599f44b-398e-4db1-a56d-3f2ca354bd33
+ref table dim_date
+ref table LocalDateTable_10dfaeef-799a-4406-a077-686df2dc84cd
+ref table _Measures
+
+ref cultureInfo tr-TR
+

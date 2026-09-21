@@ -1,0 +1,118 @@
+table DateTableTemplate_d5a99096-dbf5-4c96-831d-cab23c7105a7
+	isHidden
+	isPrivate
+	lineageTag: b0496b2d-586d-439b-b42f-a88f70980252
+
+	column Date
+		dataType: dateTime
+		isHidden
+		formatString: General Date
+		lineageTag: 539750cf-1a72-486c-8f14-bd68174d314a
+		dataCategory: PaddedDateTableDates
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Date]
+
+		annotation SummarizationSetBy = User
+
+	column Yıl = YEAR([Date])
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: c0eb12fb-317c-4534-b5ea-6d7912eaa869
+		dataCategory: Years
+		summarizeBy: none
+
+		annotation SummarizationSetBy = User
+
+		annotation TemplateId = Year
+
+	column MonthNo = MONTH([Date])
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 9c854b65-8191-40ab-b961-1e299bdb5771
+		dataCategory: MonthOfYear
+		summarizeBy: none
+
+		annotation SummarizationSetBy = User
+
+		annotation TemplateId = MonthNumber
+
+	column Ay = FORMAT([Date], "MMMM")
+		dataType: string
+		isHidden
+		lineageTag: 470f8ddc-8009-4894-957d-8c702ce7d2fb
+		dataCategory: Months
+		summarizeBy: none
+		sortByColumn: MonthNo
+
+		annotation SummarizationSetBy = User
+
+		annotation TemplateId = Month
+
+	column QuarterNo = INT(([MonthNo] + 2) / 3)
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: b6b14125-10a8-4563-90b3-003a08244d91
+		dataCategory: QuarterOfYear
+		summarizeBy: none
+
+		annotation SummarizationSetBy = User
+
+		annotation TemplateId = QuarterNumber
+
+	column Çeyrek = [QuarterNo] & ". Çey"
+		dataType: string
+		isHidden
+		lineageTag: 6b625107-8797-4930-ab3e-5643e0b6d166
+		dataCategory: Quarters
+		summarizeBy: none
+		sortByColumn: QuarterNo
+
+		annotation SummarizationSetBy = User
+
+		annotation TemplateId = Quarter
+
+	column Gün = DAY([Date])
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: d9621914-ecfe-49b6-836a-62ab20395f91
+		dataCategory: DayOfMonth
+		summarizeBy: none
+
+		annotation SummarizationSetBy = User
+
+		annotation TemplateId = Day
+
+	hierarchy 'Tarih Hiyerarşisi'
+		lineageTag: e915f79c-8897-4d72-a4b1-5f2e1e10c23f
+
+		level Yıl
+			lineageTag: a220ca74-b145-4678-9489-c4d2c0f90d44
+			column: Yıl
+
+		level Çeyrek
+			lineageTag: 79974b11-9ba1-4e6b-9822-336143092738
+			column: Çeyrek
+
+		level Ay
+			lineageTag: fba32b53-77d0-422c-a0c4-3d0ba47a4d2f
+			column: Ay
+
+		level Gün
+			lineageTag: be0fe8d0-9e8c-4407-9c9f-a213dbc2d660
+			column: Gün
+
+		annotation TemplateId = DateHierarchy
+
+	partition DateTableTemplate_d5a99096-dbf5-4c96-831d-cab23c7105a7 = calculated
+		mode: import
+		source = Calendar(Date(2015,1,1), Date(2015,1,1))
+
+	annotation __PBI_TemplateDateTable = true
+
+	annotation DefaultItem = DateHierarchy
+

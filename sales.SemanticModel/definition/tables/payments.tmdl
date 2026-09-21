@@ -1,0 +1,77 @@
+table payments
+	lineageTag: a853ff93-a183-4701-a352-6f62b5c4930e
+
+	column payment_id
+		dataType: int64
+		formatString: 0
+		lineageTag: eb2cb738-4624-42a2-8b53-3bb54d9f88bc
+		summarizeBy: sum
+		sourceColumn: payment_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column order_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 48ced698-11e7-44ff-8449-4633b89442d8
+		summarizeBy: none
+		sourceColumn: order_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column payment_method
+		dataType: string
+		lineageTag: 95124a79-7ce9-497b-a9ab-68c3ca761dcb
+		summarizeBy: none
+		sourceColumn: payment_method
+
+		annotation SummarizationSetBy = Automatic
+
+	column payment_date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 4c838c8c-c51f-4bfc-a4d9-cc27a451ea82
+		summarizeBy: none
+		sourceColumn: payment_date
+
+		variation Varyasyon
+			isDefault
+			relationship: 7bb8784c-1654-4797-aa1f-e1cbf09308cf
+			defaultHierarchy: LocalDateTable_7599f44b-398e-4db1-a56d-3f2ca354bd33.'Tarih Hiyerarşisi'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column payment_status
+		dataType: string
+		lineageTag: 2f0e3e26-dea9-467f-9dbd-391b92b9f380
+		summarizeBy: none
+		sourceColumn: payment_status
+
+		annotation SummarizationSetBy = Automatic
+
+	column amount
+		dataType: int64
+		formatString: 0
+		lineageTag: bf1362be-f049-4488-9e0e-3e1021630c66
+		summarizeBy: sum
+		sourceColumn: amount
+
+		annotation SummarizationSetBy = Automatic
+
+	partition payments = m
+		mode: import
+		source =
+				let
+				    Kaynak = Csv.Document(File.Contents("C:\Users\AybükeAltuntaş\Downloads\payments.csv"),[Delimiter=",", Columns=6, Encoding=1254, QuoteStyle=QuoteStyle.None]),
+				    #"Tanıtılan Üst Bilgiler" = Table.PromoteHeaders(Kaynak, [PromoteAllScalars=true]),
+				    #"Değiştirilen Tür" = Table.TransformColumnTypes(#"Tanıtılan Üst Bilgiler",{{"payment_id", Int64.Type}, {"order_id", Int64.Type}, {"payment_method", type text}, {"payment_date", type datetime}, {"payment_status", type text}, {"amount", Int64.Type}}),
+				    #"Değiştirilen Tür1" = Table.TransformColumnTypes(#"Değiştirilen Tür",{{"payment_date", type date}})
+				in
+				    #"Değiştirilen Tür1"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Gezinme
+

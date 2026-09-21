@@ -1,0 +1,48 @@
+/// Raporda kullanılan açık (explicit) DAX ölçülerini barındıran yardımcı tablo. Veri içermez.
+table _Measures
+	lineageTag: 573c345a-6e06-4348-831a-d8e57ea49cac
+
+	/// Sipariş satırlarındaki line_total toplamı (miktar x birim fiyat). Modeldeki temel satış tutarı ölçüsüdür.
+	measure 'Total Sales' = SUM ( 'order_items'[line_total] )
+		formatString: #,##0
+		displayFolder: Sales
+		lineageTag: d591ae76-c823-42c6-a8f0-a18544d6ba35
+
+	/// Seçili bağlamda (tarih, ürün vb. filtreler geçerli) satışı en yüksek 5 satıcının toplam satışı. Sıralama satıcı filtresinden bağımsız, dilimleyici seçimi içinde yapılır; berabere kalan 5. sırada TOPN tüm eşitleri döndürür.
+	measure 'Top 5 Sellers Sales' =
+			VAR _Top5Sellers =
+			    TOPN (
+			        5,
+			        CALCULATETABLE ( VALUES ( 'sellers'[seller_id] ), ALLSELECTED ( 'sellers' ) ),
+			        [Total Sales], DESC
+			    )
+			RETURN
+			    CALCULATE ( [Total Sales], KEEPFILTERS ( _Top5Sellers ) )
+		formatString: #,##0
+		displayFolder: Sales
+		lineageTag: b14e6c4a-a608-4618-abee-08fccb665520
+
+	/// Toplam sipariş adedi (benzersiz order_id sayısı).
+	measure 'Total Orders' = DISTINCTCOUNT ( 'orders'[order_id] )
+		formatString: #,##0
+		displayFolder: Sales
+		lineageTag: 01b95383-76e6-4ba8-92d7-4dbe64207dce
+
+	/// Sipariş bazlı toplam tutar (orders[total_amount]). Siparişlerden elde edilen parayı sipariş greninde ölçer; [Total Sales] aynı tutarı satır greninde hesaplar.
+	measure 'Total Order Revenue' = SUM ( 'orders'[total_amount] )
+		formatString: #,##0
+		displayFolder: Sales
+		lineageTag: fae7f11b-4847-4f5b-ba63-b9485b3e2466
+
+	column Value
+		isHidden
+		isAvailableInMdx: false
+		lineageTag: 8c120d41-711c-4130-9fa2-20905eb35a94
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Value]
+
+	partition _Measures = calculated
+		mode: import
+		source = {BLANK()}
+
