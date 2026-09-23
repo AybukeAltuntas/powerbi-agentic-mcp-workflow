@@ -1,28 +1,26 @@
 table dim_date
-	lineageTag: f8aebd88-70c7-4cc1-bdc1-f2c57af13241
+	lineageTag: 0c75be1d-d8af-4e6b-8c61-129c53c3c66f
 
 	column Date
 		dataType: dateTime
-		formatString: dd/mm/yyyy
-		lineageTag: 8e0529ea-5857-4690-9f48-11efaae10042
+		formatString: Long Date
+		lineageTag: 6292a82b-c7c6-4c03-af93-f778d7c5962b
 		summarizeBy: none
 		sourceColumn: Date
 
 		variation Varyasyon
 			isDefault
-			relationship: 9fac95da-5f02-4b7f-811a-e3f566444d64
-			defaultHierarchy: LocalDateTable_10dfaeef-799a-4406-a077-686df2dc84cd.'Tarih Hiyerarşisi'
+			relationship: 938f5ea3-cb16-4ec3-9cf5-c0e661427dcc
+			defaultHierarchy: LocalDateTable_2cdbf625-cfae-44e0-82a3-32689d224eed.'Tarih Hiyerarşisi'
 
 		annotation SummarizationSetBy = Automatic
 
 		annotation UnderlyingDateTimeDataType = Date
 
-		annotation PBI_FormatHint = {"isDateTimeCustom":true}
-
 	column Year
 		dataType: int64
 		formatString: 0
-		lineageTag: e3df2bfa-4096-49b7-8a14-5400274ac0d5
+		lineageTag: 852528a6-126a-4882-a356-5ec7dd6ad25d
 		summarizeBy: sum
 		sourceColumn: Year
 
@@ -31,7 +29,7 @@ table dim_date
 	column Quarter
 		dataType: int64
 		formatString: 0
-		lineageTag: 01e96baa-1b88-49dc-baae-6b85cae090ec
+		lineageTag: ef1f5eec-6489-4bf5-bbf1-01a0bc86309a
 		summarizeBy: sum
 		sourceColumn: Quarter
 
@@ -40,7 +38,7 @@ table dim_date
 	column Month
 		dataType: int64
 		formatString: 0
-		lineageTag: 0df8cc47-f816-477f-af24-90b9b9b435bc
+		lineageTag: 17b35055-ebd1-4eb9-b250-23b172564c65
 		summarizeBy: sum
 		sourceColumn: Month
 
@@ -48,7 +46,7 @@ table dim_date
 
 	column MonthName
 		dataType: string
-		lineageTag: 61fc80db-d62f-41cf-9dd9-3cccabc6e1d3
+		lineageTag: 4c0b4e8f-36ee-45d5-8686-1c0bb19a1c1f
 		summarizeBy: none
 		sourceColumn: MonthName
 
@@ -57,7 +55,7 @@ table dim_date
 	column Day
 		dataType: int64
 		formatString: 0
-		lineageTag: 167641a5-e516-4f4e-be4c-05db1b662b2e
+		lineageTag: 13d3b72c-e0f8-43a0-b95d-70db7740a9ae
 		summarizeBy: sum
 		sourceColumn: Day
 
@@ -65,7 +63,7 @@ table dim_date
 
 	column DayOfWeek
 		dataType: string
-		lineageTag: f439fb01-f899-44c4-876e-a8b5ab306886
+		lineageTag: 02e7ecd6-58c9-44d2-8979-9b9c7d1345d4
 		summarizeBy: none
 		sourceColumn: DayOfWeek
 
@@ -74,30 +72,25 @@ table dim_date
 	column IsWeekend
 		dataType: boolean
 		formatString: """TRUE"";""TRUE"";""FALSE"""
-		lineageTag: e07ce515-1c9b-43b0-af67-4e697ebad9ec
+		lineageTag: d4adf017-3b75-465e-b6d0-b99bcd9fb995
 		summarizeBy: none
 		sourceColumn: IsWeekend
 
 		annotation SummarizationSetBy = Automatic
 
-	hierarchy 'Date Hiyerarşi'
-		lineageTag: e1c6fa05-10db-43c3-af9d-6ad2272961a7
-
-		level Date
-			lineageTag: a1b4fcd2-6486-4553-9f4a-2566d32d23dc
-			column: Date
-
 	partition dim_date = m
 		mode: import
 		source =
 				let
-				    Kaynak = Csv.Document(File.Contents("C:\Users\AybükeAltuntaş\Downloads\dim_date.csv"),[Delimiter=",", Columns=8, Encoding=1254, QuoteStyle=QuoteStyle.None]),
-				    #"Tanıtılan Üst Bilgiler" = Table.PromoteHeaders(Kaynak, [PromoteAllScalars=true]),
+				    Kaynak = anasorgu,
+				    #"dim_date csv_https://mayasoftbilgisistemleri-my sharepoint com/personal/aybuke_altuntas_ensight_com_tr/Documents/salesdata/" = Kaynak{[Name="dim_date.csv",#"Folder Path"="https://mayasoftbilgisistemleri-my.sharepoint.com/personal/aybuke_altuntas_ensight_com_tr/Documents/salesdata/"]}[Content],
+				    ImportedCSV = Csv.Document(#"dim_date csv_https://mayasoftbilgisistemleri-my sharepoint com/personal/aybuke_altuntas_ensight_com_tr/Documents/salesdata/",[Delimiter=",", Columns=8, Encoding=1254, QuoteStyle=QuoteStyle.None]),
+				    #"Tanıtılan Üst Bilgiler" = Table.PromoteHeaders(ImportedCSV, [PromoteAllScalars=true]),
 				    #"Değiştirilen Tür" = Table.TransformColumnTypes(#"Tanıtılan Üst Bilgiler",{{"Date", type date}, {"Year", Int64.Type}, {"Quarter", Int64.Type}, {"Month", Int64.Type}, {"MonthName", type text}, {"Day", Int64.Type}, {"DayOfWeek", type text}, {"IsWeekend", type logical}})
 				in
 				    #"Değiştirilen Tür"
 
-	annotation PBI_ResultType = Table
-
 	annotation PBI_NavigationStepName = Gezinme
+
+	annotation PBI_ResultType = Table
 

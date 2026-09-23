@@ -1,13 +1,13 @@
-table LocalDateTable_314e6d54-d443-47e2-9c9d-ec3f890d7dd3
+table DateTableTemplate_0e129f5c-fbaf-40fd-aa6d-ec874064abbf
 	isHidden
-	showAsVariationsOnly
-	lineageTag: c986fcc6-aa26-4e8e-a83b-94249f4fedce
+	isPrivate
+	lineageTag: 184703f4-64e0-41c3-8b2a-b8d01da460dc
 
 	column Date
 		dataType: dateTime
 		isHidden
 		formatString: General Date
-		lineageTag: d368396c-c57e-4d32-a34f-bbaa75d8bebc
+		lineageTag: a36f40bf-46cd-4543-a4cf-b003b9e7df14
 		dataCategory: PaddedDateTableDates
 		summarizeBy: none
 		isNameInferred
@@ -19,7 +19,7 @@ table LocalDateTable_314e6d54-d443-47e2-9c9d-ec3f890d7dd3
 		dataType: int64
 		isHidden
 		formatString: 0
-		lineageTag: 64578e33-bd33-4771-9c78-30c80499246c
+		lineageTag: e0df321b-b626-416c-a615-61e90c5ea32f
 		dataCategory: Years
 		summarizeBy: none
 
@@ -31,7 +31,7 @@ table LocalDateTable_314e6d54-d443-47e2-9c9d-ec3f890d7dd3
 		dataType: int64
 		isHidden
 		formatString: 0
-		lineageTag: 72a6cbdf-2776-4eb1-bcf3-320a2b54c119
+		lineageTag: 532a14db-bf87-4fbb-8a56-d0e7eddeaa11
 		dataCategory: MonthOfYear
 		summarizeBy: none
 
@@ -42,7 +42,7 @@ table LocalDateTable_314e6d54-d443-47e2-9c9d-ec3f890d7dd3
 	column Ay = FORMAT([Date], "MMMM")
 		dataType: string
 		isHidden
-		lineageTag: b4faa372-f662-4fd3-97f4-4fe17af72ab4
+		lineageTag: 3e5bc4a1-1557-4ca9-ab50-0c6b4d387559
 		dataCategory: Months
 		summarizeBy: none
 		sortByColumn: MonthNo
@@ -55,7 +55,7 @@ table LocalDateTable_314e6d54-d443-47e2-9c9d-ec3f890d7dd3
 		dataType: int64
 		isHidden
 		formatString: 0
-		lineageTag: 78ba7de4-0185-462c-9aa2-66f93b51b0e0
+		lineageTag: ecec4ca7-0bb3-461a-b407-e42a73be54ce
 		dataCategory: QuarterOfYear
 		summarizeBy: none
 
@@ -66,7 +66,7 @@ table LocalDateTable_314e6d54-d443-47e2-9c9d-ec3f890d7dd3
 	column Çeyrek = [QuarterNo] & ". Çey"
 		dataType: string
 		isHidden
-		lineageTag: 3b568b99-c9b1-409c-9947-9061002e7f4d
+		lineageTag: dae7e373-68c1-48fb-8e8b-c62c7bdb9d30
 		dataCategory: Quarters
 		summarizeBy: none
 		sortByColumn: QuarterNo
@@ -79,7 +79,7 @@ table LocalDateTable_314e6d54-d443-47e2-9c9d-ec3f890d7dd3
 		dataType: int64
 		isHidden
 		formatString: 0
-		lineageTag: 97458312-c36d-4fd7-98de-bfa0a8f2dae6
+		lineageTag: 097b0acb-74ea-4893-b7d0-de7c482ad674
 		dataCategory: DayOfMonth
 		summarizeBy: none
 
@@ -88,29 +88,31 @@ table LocalDateTable_314e6d54-d443-47e2-9c9d-ec3f890d7dd3
 		annotation TemplateId = Day
 
 	hierarchy 'Tarih Hiyerarşisi'
-		lineageTag: a1cb9f01-66bf-4658-8532-061a7485ffc8
+		lineageTag: 2a2dc93d-902a-42a1-a04d-fc8d09e9d62d
 
 		level Yıl
-			lineageTag: 5eebada9-c96a-455e-a154-bb3b7ef628e4
+			lineageTag: 4d9e3eff-2d25-4ab1-9cb3-ba30508de148
 			column: Yıl
 
 		level Çeyrek
-			lineageTag: f28b0485-3572-470a-a4ff-0460bb1e04a7
+			lineageTag: f601c099-952e-48ee-a4cc-277f24714b7b
 			column: Çeyrek
 
 		level Ay
-			lineageTag: f6e1fe0a-f182-40b9-b5e9-08c972ea4714
+			lineageTag: 3d08fe78-ae06-40d8-9f58-a2eca458c800
 			column: Ay
 
 		level Gün
-			lineageTag: 01c451c1-aa49-4e42-9057-8bdc1bb1a745
+			lineageTag: 4fc220e5-404c-41e3-a80b-a89bb7b701fc
 			column: Gün
 
 		annotation TemplateId = DateHierarchy
 
-	partition LocalDateTable_314e6d54-d443-47e2-9c9d-ec3f890d7dd3 = calculated
+	partition DateTableTemplate_0e129f5c-fbaf-40fd-aa6d-ec874064abbf = calculated
 		mode: import
-		source = Calendar(Date(Year(MIN('customers'[created_at])), 1, 1), Date(Year(MAX('customers'[created_at])), 12, 31))
+		source = Calendar(Date(2015,1,1), Date(2015,1,1))
 
-	annotation __PBI_LocalDateTable = true
+	annotation __PBI_TemplateDateTable = true
+
+	annotation DefaultItem = DateHierarchy
 

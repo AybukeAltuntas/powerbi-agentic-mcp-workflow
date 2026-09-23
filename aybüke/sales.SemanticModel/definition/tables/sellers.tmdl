@@ -1,10 +1,10 @@
 table sellers
-	lineageTag: 3ffccf7d-ae1a-4b4c-93a4-890ccfd25e3d
+	lineageTag: 66b77cbe-9453-4d50-9b12-80dfc835e19c
 
 	column seller_id
 		dataType: int64
 		formatString: 0
-		lineageTag: e9cc7bf7-595b-4070-8931-942b38c69cab
+		lineageTag: ccc5f8c2-5104-4669-8bd1-e7e86ac6e550
 		summarizeBy: none
 		sourceColumn: seller_id
 
@@ -12,7 +12,7 @@ table sellers
 
 	column seller_name
 		dataType: string
-		lineageTag: 4f93b5f1-4102-4090-8b24-2307dc5a150d
+		lineageTag: 1dbde4fc-9813-44eb-8c2f-71b3eb768105
 		summarizeBy: none
 		sourceColumn: seller_name
 
@@ -20,7 +20,7 @@ table sellers
 
 	column email
 		dataType: string
-		lineageTag: b60e7bab-23cd-44ce-8e2d-b1923a8574a9
+		lineageTag: 94a304e0-81f8-42ad-ad93-5fb022562c86
 		summarizeBy: none
 		sourceColumn: email
 
@@ -29,7 +29,7 @@ table sellers
 	column phone
 		dataType: int64
 		formatString: 0
-		lineageTag: 44b63f2f-bccf-47fd-9f54-8ad1726c5897
+		lineageTag: c382593e-daab-4cf4-aecd-92807a2e64ae
 		summarizeBy: none
 		sourceColumn: phone
 
@@ -37,7 +37,7 @@ table sellers
 
 	column city
 		dataType: string
-		lineageTag: eda50085-63e7-41f3-82fe-5918a44b3241
+		lineageTag: 30dce0c4-8e2c-42fb-b830-dc4a6a59b3b5
 		summarizeBy: none
 		sourceColumn: city
 
@@ -46,7 +46,7 @@ table sellers
 	column commission_rate
 		dataType: int64
 		formatString: 0
-		lineageTag: f7e0755b-e612-4e86-892b-a45fdb552298
+		lineageTag: dd3738bd-9d77-4043-ac86-4a9e5bfa5107
 		summarizeBy: none
 		sourceColumn: commission_rate
 
@@ -56,13 +56,15 @@ table sellers
 		mode: import
 		source =
 				let
-				    Kaynak = Csv.Document(File.Contents("C:\Users\AybükeAltuntaş\Downloads\sellers.csv"),[Delimiter=",", Columns=6, Encoding=65001, QuoteStyle=QuoteStyle.None]),
-				    #"Tanıtılan Üst Bilgiler" = Table.PromoteHeaders(Kaynak, [PromoteAllScalars=true]),
+				    Kaynak = anasorgu,
+				    #"sellers csv_https://mayasoftbilgisistemleri-my sharepoint com/personal/aybuke_altuntas_ensight_com_tr/Documents/salesdata/" = Kaynak{[Name="sellers.csv",#"Folder Path"="https://mayasoftbilgisistemleri-my.sharepoint.com/personal/aybuke_altuntas_ensight_com_tr/Documents/salesdata/"]}[Content],
+				    ImportedCSV = Csv.Document(#"sellers csv_https://mayasoftbilgisistemleri-my sharepoint com/personal/aybuke_altuntas_ensight_com_tr/Documents/salesdata/",[Delimiter=",", Columns=6, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+				    #"Tanıtılan Üst Bilgiler" = Table.PromoteHeaders(ImportedCSV, [PromoteAllScalars=true]),
 				    #"Değiştirilen Tür" = Table.TransformColumnTypes(#"Tanıtılan Üst Bilgiler",{{"seller_id", Int64.Type}, {"seller_name", type text}, {"email", type text}, {"phone", Int64.Type}, {"city", type text}, {"commission_rate", Int64.Type}})
 				in
 				    #"Değiştirilen Tür"
 
-	annotation PBI_ResultType = Table
-
 	annotation PBI_NavigationStepName = Gezinme
+
+	annotation PBI_ResultType = Table
 

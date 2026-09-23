@@ -1,10 +1,10 @@
 table customers
-	lineageTag: 4d417e87-7578-47fc-ba2f-6c0fe0dcb692
+	lineageTag: e6f0d75a-0d09-4612-9199-cd5fc7edd59f
 
 	column customer_id
 		dataType: int64
 		formatString: 0
-		lineageTag: 0f06e8b2-8ea0-49ca-9510-306d748fe38b
+		lineageTag: 7151511b-c743-4623-8ee5-084d90e68df8
 		summarizeBy: none
 		sourceColumn: customer_id
 
@@ -12,7 +12,7 @@ table customers
 
 	column first_name
 		dataType: string
-		lineageTag: 27811981-9aee-4d54-9756-00b111fb09ba
+		lineageTag: 5e2ab8b5-db6a-4064-a1a3-48609122f8c6
 		summarizeBy: none
 		sourceColumn: first_name
 
@@ -20,7 +20,7 @@ table customers
 
 	column last_name
 		dataType: string
-		lineageTag: 36891a9b-bdc2-4274-a62a-70c29787665e
+		lineageTag: a04a1bf0-dc85-4a75-bae5-31553adeca37
 		summarizeBy: none
 		sourceColumn: last_name
 
@@ -28,7 +28,7 @@ table customers
 
 	column email
 		dataType: string
-		lineageTag: 43700305-36f2-4d98-8783-d2aa2c6ec046
+		lineageTag: 8aa3be71-c42f-4a14-97b2-bdaef0c7fedc
 		summarizeBy: none
 		sourceColumn: email
 
@@ -37,7 +37,7 @@ table customers
 	column phone
 		dataType: int64
 		formatString: 0
-		lineageTag: 45f85f90-91a6-4061-ac6e-e87ea6522ce2
+		lineageTag: a7418f6e-25e4-482f-979d-b0430fb39245
 		summarizeBy: sum
 		sourceColumn: phone
 
@@ -45,7 +45,7 @@ table customers
 
 	column city
 		dataType: string
-		lineageTag: b939ae31-d9bc-44b6-9325-a27bbe1e6e1d
+		lineageTag: cd220521-56dc-423f-a1d2-3f6ac744523f
 		summarizeBy: none
 		sourceColumn: city
 
@@ -53,33 +53,33 @@ table customers
 
 	column created_at
 		dataType: dateTime
-		formatString: dd/mm/yyyy
-		lineageTag: 618ea83c-1ee3-4985-913f-608e96512a26
+		formatString: Long Date
+		lineageTag: f1d41d0f-3f48-4750-8f77-ed69e592e7e5
 		summarizeBy: none
 		sourceColumn: created_at
 
 		variation Varyasyon
 			isDefault
-			relationship: 684759bb-3cea-48b9-9021-d32786c05649
-			defaultHierarchy: LocalDateTable_314e6d54-d443-47e2-9c9d-ec3f890d7dd3.'Tarih Hiyerarşisi'
+			relationship: d1c2f401-13dd-4515-87e0-638668851559
+			defaultHierarchy: LocalDateTable_c32ca93c-3e2c-4d13-af5b-fb1bc08a93ee.'Tarih Hiyerarşisi'
 
 		annotation SummarizationSetBy = Automatic
 
 		annotation UnderlyingDateTimeDataType = Date
 
-		annotation PBI_FormatHint = {"isDateTimeCustom":true}
-
 	partition customers = m
 		mode: import
 		source =
 				let
-				    Kaynak = Csv.Document(File.Contents("C:\Users\AybükeAltuntaş\Downloads\customers.csv"),[Delimiter=",", Columns=7, Encoding=65001, QuoteStyle=QuoteStyle.None]),
-				    #"Tanıtılan Üst Bilgiler" = Table.PromoteHeaders(Kaynak, [PromoteAllScalars=true]),
+				    Kaynak = anasorgu,
+				    #"customers csv_https://mayasoftbilgisistemleri-my sharepoint com/personal/aybuke_altuntas_ensight_com_tr/Documents/salesdata/" = Kaynak{[Name="customers.csv",#"Folder Path"="https://mayasoftbilgisistemleri-my.sharepoint.com/personal/aybuke_altuntas_ensight_com_tr/Documents/salesdata/"]}[Content],
+				    ImportedCSV = Csv.Document(#"customers csv_https://mayasoftbilgisistemleri-my sharepoint com/personal/aybuke_altuntas_ensight_com_tr/Documents/salesdata/",[Delimiter=",", Columns=7, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+				    #"Tanıtılan Üst Bilgiler" = Table.PromoteHeaders(ImportedCSV, [PromoteAllScalars=true]),
 				    #"Değiştirilen Tür" = Table.TransformColumnTypes(#"Tanıtılan Üst Bilgiler",{{"customer_id", Int64.Type}, {"first_name", type text}, {"last_name", type text}, {"email", type text}, {"phone", Int64.Type}, {"city", type text}, {"created_at", type date}})
 				in
 				    #"Değiştirilen Tür"
 
-	annotation PBI_ResultType = Table
-
 	annotation PBI_NavigationStepName = Gezinme
+
+	annotation PBI_ResultType = Table
 

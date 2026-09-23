@@ -1,44 +1,12 @@
-expression Parametre1 = #"Örnek Dosya" meta [IsParameterQuery=true, BinaryIdentifier=#"Örnek Dosya", Type="Binary", IsParameterQueryRequired=true]
-	lineageTag: 44c75d01-b153-49aa-ab1b-45aea73c495e
-	queryGroup: 'Sorgu1 öğesinden Dosya Dönüştür\Yardımcı Sorgular'
-
-	annotation PBI_ResultType = Binary
-
-expression 'Örnek Dosya' =
+expression anasorgu =
 		let
 		    Kaynak = SharePoint.Files("https://mayasoftbilgisistemleri-my.sharepoint.com/personal/aybuke_altuntas_ensight_com_tr/", [ApiVersion = 15]),
-		    #"Filtrelenen Satırlar" = Table.SelectRows(Kaynak, each ([Extension] = ".csv")),
-		    Gezinme1 = #"Filtrelenen Satırlar"{0}[Content]
+		    #"Filtrelenen Satırlar" = Table.SelectRows(Kaynak, each ([Extension] = ".csv"))
 		in
-		    Gezinme1
-	lineageTag: d488f8ac-0b3d-414d-9108-fe1775c4b620
-	queryGroup: 'Sorgu1 öğesinden Dosya Dönüştür\Yardımcı Sorgular'
+		    #"Filtrelenen Satırlar"
+	lineageTag: 1d840087-4c2e-421b-9a96-5a4705d96a70
 
-	annotation PBI_ResultType = Binary
-
-expression 'Örnek Dosya Dönüştür' =
-		let
-		    Kaynak = Csv.Document(Parametre1,[Delimiter=",", Columns=3, Encoding=65001, QuoteStyle=QuoteStyle.None]),
-		    #"Tanıtılan Üst Bilgiler" = Table.PromoteHeaders(Kaynak, [PromoteAllScalars=true])
-		in
-		    #"Tanıtılan Üst Bilgiler"
-	lineageTag: ca64a528-8c91-44a7-8408-1e9a939685cf
-	queryGroup: 'Sorgu1 öğesinden Dosya Dönüştür'
+	annotation PBI_NavigationStepName = Gezinme
 
 	annotation PBI_ResultType = Table
-
-expression 'Dosya Dönüştür' =
-		let
-		    Kaynak = (Parametre1) => let
-		        Kaynak = Csv.Document(Parametre1,[Delimiter=",", Columns=3, Encoding=65001, QuoteStyle=QuoteStyle.None]),
-		        #"Tanıtılan Üst Bilgiler" = Table.PromoteHeaders(Kaynak, [PromoteAllScalars=true])
-		    in
-		        #"Tanıtılan Üst Bilgiler"
-		in
-		    Kaynak
-	mAttributes: [ FunctionQueryBinding = "{""exemplarFormulaName"":""Örnek Dosya Dönüştür""}" ]
-	lineageTag: 9ea9b193-d5f3-413e-9283-74425d60824f
-	queryGroup: 'Sorgu1 öğesinden Dosya Dönüştür\Yardımcı Sorgular'
-
-	annotation PBI_ResultType = Function
 

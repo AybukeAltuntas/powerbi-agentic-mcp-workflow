@@ -7,34 +7,26 @@ model Model
 		legacyRedirects
 		returnErrorValuesAsNull
 
-queryGroup 'Sorgu1 öğesinden Dosya Dönüştür'
-
-	annotation PBI_QueryGroupOrder = 0
-
-queryGroup 'Sorgu1 öğesinden Dosya Dönüştür\Yardımcı Sorgular'
-
-	annotation PBI_QueryGroupOrder = 0
-
 annotation __PBI_TimeIntelligenceEnabled = 1
 
-annotation PBI_QueryOrder = ["categories","customers","sellers","products","orders","order_items","payments","dim_date","Sorgu1","Örnek Dosya","Parametre1","Örnek Dosya Dönüştür","Dosya Dönüştür"]
+annotation PBI_QueryOrder = ["anasorgu","categories","products","orders","sellers","customers","order_items","payments","dim_date"]
 
 annotation PBI_ProTooling = ["DevMode"]
 
+ref table _Measures
 ref table categories
-ref table customers
-ref table DateTableTemplate_d5a99096-dbf5-4c96-831d-cab23c7105a7
-ref table LocalDateTable_314e6d54-d443-47e2-9c9d-ec3f890d7dd3
-ref table sellers
 ref table products
 ref table orders
+ref table DateTableTemplate_0e129f5c-fbaf-40fd-aa6d-ec874064abbf
+ref table LocalDateTable_32051409-681a-40c5-a1b0-d5cf36216d60
+ref table sellers
+ref table customers
+ref table LocalDateTable_c32ca93c-3e2c-4d13-af5b-fb1bc08a93ee
 ref table order_items
 ref table payments
-ref table LocalDateTable_7599f44b-398e-4db1-a56d-3f2ca354bd33
+ref table LocalDateTable_524ed732-6444-41ac-9cf1-25ecd4c985d6
 ref table dim_date
-ref table LocalDateTable_10dfaeef-799a-4406-a077-686df2dc84cd
-ref table _Measures
-ref table Sorgu1
+ref table LocalDateTable_2cdbf625-cfae-44e0-82a3-32689d224eed
 
 ref cultureInfo tr-TR
 

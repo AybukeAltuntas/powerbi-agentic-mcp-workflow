@@ -1,10 +1,10 @@
 table orders
-	lineageTag: 5850c3b7-65d1-4dbb-a75e-11cc7b92a5a2
+	lineageTag: 5d78b53e-f837-4d78-a221-36853a942fd9
 
 	column order_id
 		dataType: int64
 		formatString: 0
-		lineageTag: 243205fb-b1c9-4d62-a3d5-d060e47225c7
+		lineageTag: fb5ef5cd-36c8-4523-8f34-2126122ba690
 		summarizeBy: none
 		sourceColumn: order_id
 
@@ -13,7 +13,7 @@ table orders
 	column customer_id
 		dataType: int64
 		formatString: 0
-		lineageTag: 6a1b924c-af85-4cf2-8be3-b391bf0dbb2e
+		lineageTag: 17ebeefc-ec89-4de3-a948-bb5a1f2dc4fb
 		summarizeBy: none
 		sourceColumn: customer_id
 
@@ -22,7 +22,7 @@ table orders
 	column seller_id
 		dataType: int64
 		formatString: 0
-		lineageTag: b2763207-15fb-4939-99a0-e42496c39314
+		lineageTag: f3b59b2f-808a-4107-a852-98e2ec9ff69f
 		summarizeBy: none
 		sourceColumn: seller_id
 
@@ -31,9 +31,14 @@ table orders
 	column order_date
 		dataType: dateTime
 		formatString: Long Date
-		lineageTag: 112283cb-2f7a-4777-ac84-7dd8a81ba49b
+		lineageTag: c2c5560e-1b9a-4f49-8b17-2d043d1f0c33
 		summarizeBy: none
 		sourceColumn: order_date
+
+		variation Varyasyon
+			isDefault
+			relationship: 5022439c-b276-4a41-8512-5b159ebd0945
+			defaultHierarchy: LocalDateTable_32051409-681a-40c5-a1b0-d5cf36216d60.'Tarih Hiyerarşisi'
 
 		annotation SummarizationSetBy = Automatic
 
@@ -41,7 +46,7 @@ table orders
 
 	column order_status
 		dataType: string
-		lineageTag: 451448c3-78fb-43e5-a7ba-5c7378c75d62
+		lineageTag: 53b1d67b-0eef-4da1-836d-86befd95d01e
 		summarizeBy: none
 		sourceColumn: order_status
 
@@ -50,7 +55,7 @@ table orders
 	column total_amount
 		dataType: int64
 		formatString: 0
-		lineageTag: 6a792f5c-346e-4b17-80e5-b652c09be66f
+		lineageTag: 1e0fdb79-8f86-4fdf-9ee9-39f3c5a2322e
 		summarizeBy: sum
 		sourceColumn: total_amount
 
@@ -60,14 +65,16 @@ table orders
 		mode: import
 		source =
 				let
-				    Kaynak = Csv.Document(File.Contents("C:\Users\AybükeAltuntaş\Downloads\orders.csv"),[Delimiter=",", Columns=6, Encoding=1254, QuoteStyle=QuoteStyle.None]),
-				    #"Tanıtılan Üst Bilgiler" = Table.PromoteHeaders(Kaynak, [PromoteAllScalars=true]),
+				    Kaynak = anasorgu,
+				    #"orders csv_https://mayasoftbilgisistemleri-my sharepoint com/personal/aybuke_altuntas_ensight_com_tr/Documents/salesdata/" = Kaynak{[Name="orders.csv",#"Folder Path"="https://mayasoftbilgisistemleri-my.sharepoint.com/personal/aybuke_altuntas_ensight_com_tr/Documents/salesdata/"]}[Content],
+				    ImportedCSV = Csv.Document(#"orders csv_https://mayasoftbilgisistemleri-my sharepoint com/personal/aybuke_altuntas_ensight_com_tr/Documents/salesdata/",[Delimiter=",", Columns=6, Encoding=1254, QuoteStyle=QuoteStyle.None]),
+				    #"Tanıtılan Üst Bilgiler" = Table.PromoteHeaders(ImportedCSV, [PromoteAllScalars=true]),
 				    #"Değiştirilen Tür" = Table.TransformColumnTypes(#"Tanıtılan Üst Bilgiler",{{"order_id", Int64.Type}, {"customer_id", Int64.Type}, {"seller_id", Int64.Type}, {"order_date", type datetime}, {"order_status", type text}, {"total_amount", Int64.Type}}),
 				    #"Değiştirilen Tür1" = Table.TransformColumnTypes(#"Değiştirilen Tür",{{"order_date", type date}})
 				in
 				    #"Değiştirilen Tür1"
 
-	annotation PBI_ResultType = Table
-
 	annotation PBI_NavigationStepName = Gezinme
+
+	annotation PBI_ResultType = Table
 

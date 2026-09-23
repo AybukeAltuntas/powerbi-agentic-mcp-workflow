@@ -1,10 +1,10 @@
 table order_items
-	lineageTag: 046d02de-600f-4b80-8cfa-d692550a7706
+	lineageTag: 81bf3ee5-e94d-4e55-a4b1-d2b2b4d7e370
 
 	column order_item_id
 		dataType: int64
 		formatString: 0
-		lineageTag: 26f7ea81-1018-4bc6-8f9f-36f97ae510ed
+		lineageTag: dea0fffd-f38b-4aa3-9ab8-90412583e19d
 		summarizeBy: sum
 		sourceColumn: order_item_id
 
@@ -13,7 +13,7 @@ table order_items
 	column order_id
 		dataType: int64
 		formatString: 0
-		lineageTag: aa6f9f0b-1d93-44b3-a33d-8cd8f12a5c72
+		lineageTag: 8ec477ad-d378-4205-ac42-6696a5d3c9f1
 		summarizeBy: none
 		sourceColumn: order_id
 
@@ -22,7 +22,7 @@ table order_items
 	column product_id
 		dataType: int64
 		formatString: 0
-		lineageTag: 974897a6-5c1b-409a-8969-48b60ca1d67a
+		lineageTag: 93a28dd4-4488-4391-8201-531d76bcf4c1
 		summarizeBy: none
 		sourceColumn: product_id
 
@@ -31,7 +31,7 @@ table order_items
 	column quantity
 		dataType: int64
 		formatString: 0
-		lineageTag: 3e656288-7517-4bd1-8cb2-ee5d2e431eb3
+		lineageTag: fa335b4a-303b-4207-a225-33ee23eb66ff
 		summarizeBy: sum
 		sourceColumn: quantity
 
@@ -40,7 +40,7 @@ table order_items
 	column unit_price
 		dataType: int64
 		formatString: 0
-		lineageTag: da2a2095-7e3d-4986-a559-ac121356830b
+		lineageTag: d79cfcf5-905b-4ae3-bab7-ea2f24b4d81a
 		summarizeBy: sum
 		sourceColumn: unit_price
 
@@ -49,7 +49,7 @@ table order_items
 	column line_total
 		dataType: int64
 		formatString: 0
-		lineageTag: 6e14bdf2-b671-4262-a73e-67403139b1d9
+		lineageTag: 6b8347ea-02ad-4963-ac6c-fd66b8f6f96b
 		summarizeBy: sum
 		sourceColumn: line_total
 
@@ -59,13 +59,15 @@ table order_items
 		mode: import
 		source =
 				let
-				    Kaynak = Csv.Document(File.Contents("C:\Users\AybükeAltuntaş\Downloads\order_items.csv"),[Delimiter=",", Columns=6, Encoding=1254, QuoteStyle=QuoteStyle.None]),
-				    #"Tanıtılan Üst Bilgiler" = Table.PromoteHeaders(Kaynak, [PromoteAllScalars=true]),
+				    Kaynak = anasorgu,
+				    #"order_items csv_https://mayasoftbilgisistemleri-my sharepoint com/personal/aybuke_altuntas_ensight_com_tr/Documents/salesdata/" = Kaynak{[Name="order_items.csv",#"Folder Path"="https://mayasoftbilgisistemleri-my.sharepoint.com/personal/aybuke_altuntas_ensight_com_tr/Documents/salesdata/"]}[Content],
+				    ImportedCSV = Csv.Document(#"order_items csv_https://mayasoftbilgisistemleri-my sharepoint com/personal/aybuke_altuntas_ensight_com_tr/Documents/salesdata/",[Delimiter=",", Columns=6, Encoding=1254, QuoteStyle=QuoteStyle.None]),
+				    #"Tanıtılan Üst Bilgiler" = Table.PromoteHeaders(ImportedCSV, [PromoteAllScalars=true]),
 				    #"Değiştirilen Tür" = Table.TransformColumnTypes(#"Tanıtılan Üst Bilgiler",{{"order_item_id", Int64.Type}, {"order_id", Int64.Type}, {"product_id", Int64.Type}, {"quantity", Int64.Type}, {"unit_price", Int64.Type}, {"line_total", Int64.Type}})
 				in
 				    #"Değiştirilen Tür"
 
-	annotation PBI_ResultType = Table
-
 	annotation PBI_NavigationStepName = Gezinme
+
+	annotation PBI_ResultType = Table
 

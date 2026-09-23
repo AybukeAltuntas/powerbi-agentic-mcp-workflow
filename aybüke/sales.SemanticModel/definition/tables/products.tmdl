@@ -1,10 +1,10 @@
 table products
-	lineageTag: 013c7cb0-1f9b-4aea-947c-79f9d32101a4
+	lineageTag: 62a023f7-ddd8-427b-8971-b234636b7f88
 
 	column product_id
 		dataType: int64
 		formatString: 0
-		lineageTag: 7169e4e6-f739-4f4a-9203-9bfdbe4b8e7c
+		lineageTag: f9019d7d-5c16-4da1-9317-870f935374f8
 		summarizeBy: none
 		sourceColumn: product_id
 
@@ -13,7 +13,7 @@ table products
 	column category_id
 		dataType: int64
 		formatString: 0
-		lineageTag: da6c297a-de1e-459f-a308-79052f91c8b4
+		lineageTag: a109530a-cdad-4e7f-a8fc-ad8ff11d38ca
 		summarizeBy: none
 		sourceColumn: category_id
 
@@ -21,7 +21,7 @@ table products
 
 	column product_name
 		dataType: string
-		lineageTag: ec88eb00-fdfe-4307-be57-9b657fe51b48
+		lineageTag: a80e044e-30b7-48c1-9339-adbca7b9bed5
 		summarizeBy: none
 		sourceColumn: product_name
 
@@ -29,7 +29,7 @@ table products
 
 	column sku
 		dataType: string
-		lineageTag: 2253e9cb-3bb4-480f-b0ad-400e9725d2ac
+		lineageTag: d7b3dedc-0bea-4b97-b8fb-72af2389584e
 		summarizeBy: none
 		sourceColumn: sku
 
@@ -38,7 +38,7 @@ table products
 	column unit_price
 		dataType: int64
 		formatString: 0
-		lineageTag: c9904a16-be30-4893-9aad-3a3bf7ab084b
+		lineageTag: 923bd40f-b713-4b47-b3f9-391a2fcf00e2
 		summarizeBy: sum
 		sourceColumn: unit_price
 
@@ -47,7 +47,7 @@ table products
 	column stock_quantity
 		dataType: int64
 		formatString: 0
-		lineageTag: 49efd666-3cdb-4e8d-9d86-cef8c51e4787
+		lineageTag: c5b9e0b8-9780-4a26-a716-c8aa6b90ba54
 		summarizeBy: sum
 		sourceColumn: stock_quantity
 
@@ -56,7 +56,7 @@ table products
 	column is_active
 		dataType: boolean
 		formatString: """TRUE"";""TRUE"";""FALSE"""
-		lineageTag: 03e1e2ea-012d-4947-9134-cda75cfe7d56
+		lineageTag: 717fde18-5d96-4fd4-a63e-60255991c1a6
 		summarizeBy: none
 		sourceColumn: is_active
 
@@ -66,13 +66,15 @@ table products
 		mode: import
 		source =
 				let
-				    Kaynak = Csv.Document(File.Contents("C:\Users\AybükeAltuntaş\Downloads\products.csv"),[Delimiter=",", Columns=7, Encoding=65001, QuoteStyle=QuoteStyle.None]),
-				    #"Tanıtılan Üst Bilgiler" = Table.PromoteHeaders(Kaynak, [PromoteAllScalars=true]),
+				    Kaynak = anasorgu,
+				    #"products csv_https://mayasoftbilgisistemleri-my sharepoint com/personal/aybuke_altuntas_ensight_com_tr/Documents/salesdata/" = Kaynak{[Name="products.csv",#"Folder Path"="https://mayasoftbilgisistemleri-my.sharepoint.com/personal/aybuke_altuntas_ensight_com_tr/Documents/salesdata/"]}[Content],
+				    ImportedCSV = Csv.Document(#"products csv_https://mayasoftbilgisistemleri-my sharepoint com/personal/aybuke_altuntas_ensight_com_tr/Documents/salesdata/",[Delimiter=",", Columns=7, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+				    #"Tanıtılan Üst Bilgiler" = Table.PromoteHeaders(ImportedCSV, [PromoteAllScalars=true]),
 				    #"Değiştirilen Tür" = Table.TransformColumnTypes(#"Tanıtılan Üst Bilgiler",{{"product_id", Int64.Type}, {"category_id", Int64.Type}, {"product_name", type text}, {"sku", type text}, {"unit_price", Int64.Type}, {"stock_quantity", Int64.Type}, {"is_active", type logical}})
 				in
 				    #"Değiştirilen Tür"
 
-	annotation PBI_ResultType = Table
-
 	annotation PBI_NavigationStepName = Gezinme
+
+	annotation PBI_ResultType = Table
 

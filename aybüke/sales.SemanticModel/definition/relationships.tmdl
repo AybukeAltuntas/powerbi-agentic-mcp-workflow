@@ -1,49 +1,46 @@
-relationship 684759bb-3cea-48b9-9021-d32786c05649
+relationship 5022439c-b276-4a41-8512-5b159ebd0945
+	joinOnDateBehavior: datePartOnly
+	fromColumn: orders.order_date
+	toColumn: LocalDateTable_32051409-681a-40c5-a1b0-d5cf36216d60.Date
+
+relationship d1c2f401-13dd-4515-87e0-638668851559
 	joinOnDateBehavior: datePartOnly
 	fromColumn: customers.created_at
-	toColumn: LocalDateTable_314e6d54-d443-47e2-9c9d-ec3f890d7dd3.Date
+	toColumn: LocalDateTable_c32ca93c-3e2c-4d13-af5b-fb1bc08a93ee.Date
 
-relationship AutoDetected_5c6b7d96-5366-46e0-a096-8311eae3c93e
+relationship 0505e098-4166-4326-923f-9fa7bdeea9ce
+	joinOnDateBehavior: datePartOnly
+	fromColumn: payments.payment_date
+	toColumn: LocalDateTable_524ed732-6444-41ac-9cf1-25ecd4c985d6.Date
+
+relationship 938f5ea3-cb16-4ec3-9cf5-c0e661427dcc
+	joinOnDateBehavior: datePartOnly
+	fromColumn: dim_date.Date
+	toColumn: LocalDateTable_2cdbf625-cfae-44e0-82a3-32689d224eed.Date
+
+relationship AutoDetected_cfab86f0-073f-45b1-ab80-126165c8f68a
 	fromColumn: products.category_id
 	toColumn: categories.category_id
 
-relationship AutoDetected_e5a45cc8-7402-4154-8fb5-80b09874b258
-	fromColumn: orders.customer_id
-	toColumn: customers.customer_id
-
-relationship AutoDetected_91e44cdb-ef99-4e61-91fa-e74657464778
-	fromColumn: orders.seller_id
-	toColumn: sellers.seller_id
-
-relationship AutoDetected_8c1648a3-6ed7-46a5-b4a3-d0235664efd2
+relationship AutoDetected_3e80cead-2603-4f33-9408-0919685b7803
 	fromColumn: order_items.product_id
 	toColumn: products.product_id
 
-relationship AutoDetected_9a63595e-c05c-4b8e-b40a-d570df876129
+relationship AutoDetected_cdb5cee3-1dff-418e-8c41-78b6da0d89cc
 	fromColumn: order_items.order_id
 	toColumn: orders.order_id
 
-relationship 7bb8784c-1654-4797-aa1f-e1cbf09308cf
-	joinOnDateBehavior: datePartOnly
-	fromColumn: payments.payment_date
-	toColumn: LocalDateTable_7599f44b-398e-4db1-a56d-3f2ca354bd33.Date
-
-relationship AutoDetected_8f340200-9c9d-4b67-89ac-b317d918b0b9
+relationship AutoDetected_2dbc2fa8-f8fa-4370-ab59-f3aa782f1352
 	crossFilteringBehavior: bothDirections
 	fromCardinality: one
 	fromColumn: payments.order_id
 	toColumn: orders.order_id
 
-relationship 9fac95da-5f02-4b7f-811a-e3f566444d64
-	joinOnDateBehavior: datePartOnly
-	fromColumn: dim_date.Date
-	toColumn: LocalDateTable_10dfaeef-799a-4406-a077-686df2dc84cd.Date
+relationship AutoDetected_c1551ffd-d806-4ce6-8958-0eb90a41dc1a
+	fromColumn: orders.customer_id
+	toColumn: customers.customer_id
 
-relationship 70f91402-6172-258b-4d90-3e4c58a7bc09
-	fromColumn: orders.order_date
-	toColumn: dim_date.Date
-
-relationship AutoDetected_b90d6051-02f5-4f8a-8345-39647c3114fe
-	fromColumn: Sorgu1.category_id
-	toColumn: categories.category_id
+relationship AutoDetected_381be4f7-721c-42fe-8d42-6f6002e8cc3a
+	fromColumn: orders.seller_id
+	toColumn: sellers.seller_id
 
