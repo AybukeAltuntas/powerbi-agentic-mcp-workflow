@@ -1,0 +1,55 @@
+table Sorgu1
+	lineageTag: 08da336c-c476-45f1-8cf2-fc6bc1b29526
+
+	column 'Source.Name'
+		dataType: string
+		lineageTag: 4fc52eee-56aa-4b40-8f87-821a8a0c667d
+		summarizeBy: none
+		sourceColumn: Source.Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column category_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 2d6a8a35-8630-45b2-8334-8bf97c7c025a
+		summarizeBy: none
+		sourceColumn: category_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column category_name
+		dataType: string
+		lineageTag: 9eb1cc42-614c-45a5-9074-41a6acaf1561
+		summarizeBy: none
+		sourceColumn: category_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column description
+		dataType: string
+		lineageTag: e17b2486-7f82-42d4-8855-6d3ac94490fb
+		summarizeBy: none
+		sourceColumn: description
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Sorgu1 = m
+		mode: import
+		source =
+				let
+				    Kaynak = SharePoint.Files("https://mayasoftbilgisistemleri-my.sharepoint.com/personal/aybuke_altuntas_ensight_com_tr/", [ApiVersion = 15]),
+				    #"Filtrelenen Satırlar" = Table.SelectRows(Kaynak, each ([Extension] = ".csv")),
+				    #"Filtrelenmiş Gizli Dosyalar1" = Table.SelectRows(#"Filtrelenen Satırlar", each [Attributes]?[Hidden]? <> true),
+				    #"Özel İşlev Çağır1" = Table.AddColumn(#"Filtrelenmiş Gizli Dosyalar1", "Dosya Dönüştür", each #"Dosya Dönüştür"([Content])),
+				    #"Yeniden Adlandırılan Sütunlar1" = Table.RenameColumns(#"Özel İşlev Çağır1", {"Name", "Source.Name"}),
+				    #"Kaldırılan Diğer Sütunlar1" = Table.SelectColumns(#"Yeniden Adlandırılan Sütunlar1", {"Source.Name", "Dosya Dönüştür"}),
+				    #"Genişletilen Tablo Sütunu1" = Table.ExpandTableColumn(#"Kaldırılan Diğer Sütunlar1", "Dosya Dönüştür", Table.ColumnNames(#"Dosya Dönüştür"(#"Örnek Dosya"))),
+				    #"Değiştirilen Tür" = Table.TransformColumnTypes(#"Genişletilen Tablo Sütunu1",{{"Source.Name", type text}, {"category_id", Int64.Type}, {"category_name", type text}, {"description", type text}})
+				in
+				    #"Değiştirilen Tür"
+
+	annotation PBI_NavigationStepName = Gezinme
+
+	annotation PBI_ResultType = Table
+

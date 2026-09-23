@@ -43,3 +43,7 @@ relationship 70f91402-6172-258b-4d90-3e4c58a7bc09
 	fromColumn: orders.order_date
 	toColumn: dim_date.Date
 
+relationship AutoDetected_b90d6051-02f5-4f8a-8345-39647c3114fe
+	fromColumn: Sorgu1.category_id
+	toColumn: categories.category_id
+

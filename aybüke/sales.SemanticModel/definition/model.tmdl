@@ -7,9 +7,17 @@ model Model
 		legacyRedirects
 		returnErrorValuesAsNull
 
+queryGroup 'Sorgu1 öğesinden Dosya Dönüştür'
+
+	annotation PBI_QueryGroupOrder = 0
+
+queryGroup 'Sorgu1 öğesinden Dosya Dönüştür\Yardımcı Sorgular'
+
+	annotation PBI_QueryGroupOrder = 0
+
 annotation __PBI_TimeIntelligenceEnabled = 1
 
-annotation PBI_QueryOrder = ["categories","customers","sellers","products","orders","order_items","payments","dim_date"]
+annotation PBI_QueryOrder = ["categories","customers","sellers","products","orders","order_items","payments","dim_date","Sorgu1","Örnek Dosya","Parametre1","Örnek Dosya Dönüştür","Dosya Dönüştür"]
 
 annotation PBI_ProTooling = ["DevMode"]
 
@@ -26,6 +34,7 @@ ref table LocalDateTable_7599f44b-398e-4db1-a56d-3f2ca354bd33
 ref table dim_date
 ref table LocalDateTable_10dfaeef-799a-4406-a077-686df2dc84cd
 ref table _Measures
+ref table Sorgu1
 
 ref cultureInfo tr-TR
 
