@@ -1,8 +1,8 @@
 import argparse
 import sys
-from azure.identity import InteractiveBrowserCredential
 from fabric_cicd import FabricWorkspace, publish_all_items, append_feature_flag
-
+import os
+from azure.identity import InteractiveBrowserCredential, DefaultAzureCredential
 def deploy_to_fabric(workspace: str, folder: str = None, environment: str = "dev"):
     """
     Local PBIP projesini Microsoft Fabric Workspace'ine deploy eder.
@@ -16,7 +16,11 @@ def deploy_to_fabric(workspace: str, folder: str = None, environment: str = "dev
         append_feature_flag("enable_include_folder")
 
         # 2. Kimlik Doğrulama
-        credential = InteractiveBrowserCredential()
+        # Eğer GitHub Actions ortamındaysak DefaultAzureCredential, localdeysek Interactive kullan
+        if os.getenv("GITHUB_ACTIONS"):
+            credential = DefaultAzureCredential()
+        else:
+            credential = InteractiveBrowserCredential()
 
         # 3. FabricWorkspace Nesnesinin Oluşturulması
         ws = FabricWorkspace(
